@@ -7,14 +7,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="WebTest1" />
+        <module name="Web_ProductSystem" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="18" />
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="WebTest1" options="-parameters" />
+      <module name="Web_ProductSystem" options="" />
     </option>
   </component>
 </project>
