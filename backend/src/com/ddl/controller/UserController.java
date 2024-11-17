@@ -1,7 +1,6 @@
 package com.ddl.controller;
 
 import com.ddl.entity.User;
-import com.ddl.controller.UserRepository;
 import io.javalin.http.Handler;
 
 public class UserController {
