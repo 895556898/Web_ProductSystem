@@ -1,30 +1,36 @@
 package com.ddl.service;
 
+import com.ddl.common.StatusCode;
 import com.ddl.entity.User;
-import com.ddl.controller.UserRepository;
+import com.ddl.mapper.UserMapper;
+import com.mybatisflex.core.MybatisFlexBootstrap;
+import com.mybatisflex.core.query.QueryWrapper;
 
 public class UserService {
-    private final UserRepository userRepository;
+    UserMapper userMapper = MybatisFlexBootstrap.getInstance().getMapper(UserMapper.class);
 
-    public UserService() {
-        this.userRepository = new UserRepository();
+    public static UserService getInstance() {
+        return new UserService();
     }
 
-    public String register(String username, String password) {
-        if (userRepository.findByUsername(username).isPresent()) {
-            return "Username already exists!";
+    public StatusCode register(String username, String password) {
+        if(userMapper.selectCountByQuery(new QueryWrapper().eq("username", username)) != 0){
+            return StatusCode.REGISTER_USERNAME_DUPLICATE;
         }
+
         User user = new User();
         user.setUsername(username);
-        user.setPassword(password); // 在实际应用中需要加密
-        userRepository.save(user);
-        return "User registered successfully!";
+        user.setPassword(password); //TODO：加盐
+        userMapper.insert(user);
+        return StatusCode.REGISTER_SUCCESS;
     }
 
-    public String login(String username, String password) {
-        return userRepository.findByUsername(username)
-                .filter(user -> user.getPassword().equals(password))
-                .map(user -> "Login successful!")
-                .orElse("Invalid username or password!");
+    public StatusCode login(String username, String password) {
+        User user = userMapper.selectOneByQuery(new QueryWrapper().eq("username", username));
+        if(user == null || !user.getPassword().equals(password)){//TODO：这里需要加盐处理
+            return StatusCode.LOGIN_FAIL;
+        }else{
+            return StatusCode.LOGIN_SUCCESS;
+        }
     }
 }

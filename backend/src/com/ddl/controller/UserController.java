@@ -1,32 +1,20 @@
 package com.ddl.controller;
 
 import com.ddl.entity.User;
-import io.javalin.http.Handler;
+import com.ddl.service.UserService;
+import io.javalin.http.Context;
 
 public class UserController {
-    private final UserRepository userRepository = new UserRepository();
+    private final static UserService userService = UserService.getInstance();
 
-    public Handler registerUser = ctx -> {
+    public static void userRegister(Context ctx) {
         User user = ctx.bodyAsClass(User.class);
-        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-            ctx.status(400).result("用户名已存在");
-        } else {
-            userRepository.save(user);
-            ctx.result("注册成功");
-        }
-    };
+        ctx.result(userService.register(user.getUsername(), user.getPassword()).getMsg());
 
-    public Handler loginUser = ctx -> {
+    }
+
+    public static void userLogin(Context ctx) {
         User user = ctx.bodyAsClass(User.class);
-        userRepository.findByUsername(user.getUsername()).ifPresentOrElse(
-            existingUser -> {
-                if (existingUser.getPassword().equals(user.getPassword())) {
-                    ctx.result("登录成功");
-                } else {
-                    ctx.status(400).result("密码错误");
-                }
-            },
-            () -> ctx.status(404).result("用户不存在")
-        );
+        ctx.result(userService.login(user.getUsername(), user.getPassword()).getMsg());
     };
 }
