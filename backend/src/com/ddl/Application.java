@@ -1,12 +1,14 @@
-package com.ddl;
+ package com.ddl;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.ddl.controller.UserController;
+import com.ddl.interceptor.SessionInterceptor;
 import com.ddl.mapper.UserMapper;
 import com.mybatisflex.core.MybatisFlexBootstrap;
 import io.javalin.Javalin;
 
-public class Application {
+
+ public class Application {
     public static void main(String[] args) {
         Javalin app = Javalin.create(config -> {
             config.http.defaultContentType = "application/json";
@@ -15,6 +17,10 @@ public class Application {
 
         app.post("/api/users/register", UserController::userRegister);
         app.post("/api/users/login", UserController::userLogin);
+
+        // 拦截器
+        SessionInterceptor sessionInterceptor = new SessionInterceptor();
+        app.before("/api/users/*",  sessionInterceptor::handle);
 
         try (DruidDataSource dataSource = new DruidDataSource()) {
             dataSource.setUrl("jdbc:mysql://112.124.20.183:3306/Web_ProductSystem");

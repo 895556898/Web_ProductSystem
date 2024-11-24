@@ -8,4 +8,5 @@ import com.mybatisflex.core.BaseMapper;
  * @createDate: 2024/11/17 17:55
  */
 public interface UserMapper extends BaseMapper<User> {
+
 }
