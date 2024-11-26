@@ -14,9 +14,10 @@ import io.javalin.Javalin;
             config.http.defaultContentType = "application/json";
         }).start(8080);
 
-
+        app.get("/api/users/currentUser", UserController::getCurrentUser);
         app.post("/api/users/register", UserController::userRegister);
         app.post("/api/users/login", UserController::userLogin);
+        app.post("/api/users/logout", UserController::userLogout);
 
         // 拦截器
         SessionInterceptor sessionInterceptor = new SessionInterceptor();

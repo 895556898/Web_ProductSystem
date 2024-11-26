@@ -15,6 +15,7 @@ import Settings from '../../../../config/defaultSettings';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 import { createStyles } from 'antd-style';
+import CryptoJS from 'crypto-js';
 
 const useStyles = createStyles(({ token }) => {
   return {
@@ -99,7 +100,8 @@ const Login: React.FC = () => {
   const handleSubmit = async (values: API.LoginParams) => {
     try {
       // 登录
-      const msg = await login({ ...values, type });
+      const hashedPassword = CryptoJS.SHA256(values.password as string).toString(CryptoJS.enc.Hex);
+      const msg = await login({ ...values, password: hashedPassword });
       if (msg.status === 'ok') {
         const defaultLoginSuccessMessage = intl.formatMessage({
           id: 'pages.login.success',
@@ -123,7 +125,7 @@ const Login: React.FC = () => {
       message.error(defaultLoginFailureMessage);
     }
   };
-  const { status, type: loginType } = userLoginState;
+  const { status } = userLoginState;
 
   return (
     <div className={styles.container}>
@@ -173,7 +175,7 @@ const Login: React.FC = () => {
             ]}
           />
 
-          {status === 'error' && loginType === 'account' && (
+          {status === 'error' && (
             <LoginMessage
               content={intl.formatMessage({
                 id: 'pages.login.accountLogin.errorMessage',
@@ -181,7 +183,7 @@ const Login: React.FC = () => {
               })}
             />
           )}
-          {type === 'account' && (
+          {(
             <>
               <ProFormText
                 name="username"

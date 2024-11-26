@@ -12,7 +12,12 @@ public class User{
 
     private String username;
 
-    private String password;
+    //Store in the form of base64
+    private String hashedPassword;
 
     private String salt;
+
+    private String email;
+
+    private String avatar;
 }

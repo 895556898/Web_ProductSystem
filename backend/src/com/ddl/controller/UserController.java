@@ -2,6 +2,8 @@ package com.ddl.controller;
 
 import com.ddl.common.StatusCode;
 import com.ddl.entity.User;
+import com.ddl.entity.dto.UserDTO;
+import com.ddl.entity.vo.LoginResultVO;
 import com.ddl.service.UserService;
 import io.javalin.http.Context;
 
@@ -14,20 +16,32 @@ public class UserController {
 
     public static void userRegister(Context ctx) {
         User user = ctx.bodyAsClass(User.class);
-        ctx.result(userService.register(user.getUsername(), user.getPassword()).getMsg());
-
+        ctx.result(userService.register(user.getUsername(), user.getHashedPassword()).getMsg());
     }
 
     public static void userLogin(Context ctx) {
-        User user = ctx.bodyAsClass(User.class);
-
-        if(userService.login(user.getUsername(), user.getPassword()) == StatusCode.LOGIN_SUCCESS){
+        UserDTO userDTO = ctx.bodyAsClass(UserDTO.class);
+        StatusCode statusCode = userService.login(userDTO);
+        if(statusCode == StatusCode.LOGIN_SUCCESS){
             String sessionId = UUID.randomUUID().toString();
             ctx.sessionAttribute(SESSION_KEY, sessionId);
+            ctx.sessionAttribute("username", userDTO.getUsername());
             ctx.header("Authorization", "Bearer " + sessionId);
-            ctx.result(userService.login(user.getUsername(), user.getPassword()).getMsg());
+            if(userDTO.isAutoLogin()){
+                ctx.cookie(SESSION_KEY, sessionId, 60 * 60 * 24 * 7);//硬编码1下，生命周期7天
+            }
+            ctx.json(new LoginResultVO(statusCode.getMsg(), "ok", sessionId));
         }else{
-            ctx.result(userService.login(user.getUsername(), user.getPassword()).getMsg());
+            ctx.json(new LoginResultVO(statusCode.getMsg(), "error", null));
         }
+    }
+
+    public static void userLogout(Context ctx) {
+        ctx.sessionAttribute(SESSION_KEY, null);
+        ctx.result("logout success");
+    }
+
+    public static void getCurrentUser(Context ctx) {
+        ctx.json(userService.getCurrentUser(ctx.sessionAttribute("username")));
     }
 }
