@@ -8,13 +8,13 @@ import lombok.Data;
  */
 @Data
 public class CurrentUserVO {
-    private String user;
+    private String name;
     private String avatar;
     private long userID;
     private String email;
 
     public CurrentUserVO(String username, String avatar, long id, String email) {
-        this.user = username;
+        this.name = username;
         this.avatar = avatar;
         this.userID = id;
         this.email = email;
