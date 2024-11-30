@@ -131,7 +131,21 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
  */
 export const request : RequestConfig = {
   ...errorConfig,
-  headers:{
-    'Authorization': 'Bearer ' + localStorage.getItem('sessionID')
-  },
+  requestInterceptors: [
+    (url, options) => {
+      const sessionID = localStorage.getItem('sessionID') || '';
+      const authHeader = sessionID ? `Bearer ${sessionID}` : '';
+
+      return {
+        url,
+        options: {
+          ...options,
+          headers: {
+            ...options.headers,
+            Authorization: authHeader,
+          },
+        },
+      };
+    },
+  ],
 };
