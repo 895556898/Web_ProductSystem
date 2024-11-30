@@ -2,6 +2,7 @@ package com.ddl.service;
 
 import com.ddl.common.StatusCode;
 import com.ddl.entity.User;
+import com.ddl.entity.dto.UpdatePasswordDTO;
 import com.ddl.entity.dto.UserDTO;
 import com.ddl.entity.vo.CurrentUserVO;
 import com.ddl.mapper.UserMapper;
@@ -50,6 +51,7 @@ public class UserService {
         }
     }
 
+    // 获取当前用户信息
     public CurrentUserVO getCurrentUser(String username) {
         User user = userMapper.selectOneByQuery(new QueryWrapper().eq("username", username));
         return new CurrentUserVO(user.getUsername(), user.getAvatar(), user.getId(), user.getEmail());
@@ -66,6 +68,46 @@ public class UserService {
             return Base64.getEncoder().encodeToString(hash);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    //用户修改密码
+    public StatusCode updatePassword(UpdatePasswordDTO updatePasswordDTO) {
+        User user = userMapper.selectOneByQuery(new QueryWrapper().eq("username", updatePasswordDTO.getUsername()));
+        if(user == null){
+            return StatusCode.USER_NOT_FOUND;
+        }
+
+        String hashedOldPassword = hashSHA256(updatePasswordDTO.getOldPassword() + user.getSalt());
+        if(!user.getHashedPassword().equals(hashedOldPassword)){
+            return StatusCode.OLD_PASSWORD_INCORRECT;
+        }
+
+        String newSalt = generateSalt();
+        String hashedNewPassword = hashSHA256(updatePasswordDTO.getNewPassword() + newSalt);
+        user.setHashedPassword(hashedNewPassword);
+        user.setSalt(newSalt);
+
+        int updatedRows = userMapper.update(user);
+        if(updatedRows > 0){
+            return StatusCode.PASSWORD_UPDATE_SUCCESS;
+        } else {
+            return StatusCode.PASSWORD_UPDATE_FAILED;
+        }
+    }
+
+    //注销账户
+    public StatusCode deleteUserByUsername(String username) {
+        User user = userMapper.selectOneByQuery(new QueryWrapper().eq("username", username));
+        if (user == null) {
+            return StatusCode.USER_NOT_FOUND;
+        }
+
+        int deletedRows = userMapper.deleteById(user.getId());
+        if (deletedRows > 0) {
+            return StatusCode.ACCOUNT_DELETION_SUCCESS;
+        } else {
+            return StatusCode.ACCOUNT_DELETION_FAILED;
         }
     }
 }
