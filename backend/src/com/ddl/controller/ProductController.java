@@ -19,7 +19,7 @@ public class ProductController {
     public void addProduct(Context ctx) {
         ProductDTO productDTO = ctx.bodyAsClass(ProductDTO.class);
         Product product = new Product();
-        // 将 ProductDTO 转换为 Product 实体，设置属性
+
         product.setName(productDTO.getName());
         product.setPrice(productDTO.getPrice());
         product.setOrigin(productDTO.getOrigin());

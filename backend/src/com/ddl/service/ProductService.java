@@ -24,7 +24,6 @@ public class ProductService {
                 return StatusCode.PRODUCT_ADD_FAILED;
             }
         } catch (Exception e) {
-            // Log the exception
             return StatusCode.PRODUCT_ADD_FAILED;
         }
     }
@@ -39,7 +38,6 @@ public class ProductService {
                 return StatusCode.PRODUCT_DELETE_FAILED;
             }
         } catch (Exception e) {
-            // Log the exception
             return StatusCode.PRODUCT_DELETE_FAILED;
         }
     }
@@ -47,7 +45,7 @@ public class ProductService {
     //更新商品信息
     public StatusCode updateProduct(ProductDTO productDTO) {
         Product product = new Product();
-        // 将 ProductDTO 转换为 Product 实体
+
         product.setId(productDTO.getId());
         product.setName(productDTO.getName());
         product.setPrice(productDTO.getPrice());
@@ -67,7 +65,6 @@ public class ProductService {
                 return StatusCode.PRODUCT_UPDATE_FAILED;
             }
         } catch (Exception e) {
-            // 记录异常日志
             return StatusCode.PRODUCT_UPDATE_FAILED;
         }
     }
