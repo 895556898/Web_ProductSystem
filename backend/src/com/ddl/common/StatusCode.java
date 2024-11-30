@@ -15,7 +15,11 @@ public enum StatusCode {
     PASSWORD_UPDATE_SUCCESS(30002, "密码修改成功", "ok"),
     PASSWORD_UPDATE_FAILED(30003, "密码修改失败，请致电管理员", "error"),
     ACCOUNT_DELETION_SUCCESS(40000, "账户注销成功", "ok"),
-    ACCOUNT_DELETION_FAILED(40001, "账户注销失败，请致电管理员", "error");
+    ACCOUNT_DELETION_FAILED(40001, "账户注销失败，请致电管理员", "error"),
+    PRODUCT_ADD_SUCCESS(50000, "商品添加成功", "ok"),
+    PRODUCT_ADD_FAILED(50001, "商品添加失败", "error"),
+    PRODUCT_DELETE_SUCCESS(50002, "商品删除成功", "ok"),
+    PRODUCT_DELETE_FAILED(50003, "商品删除失败", "error");
 
 
     final int code;
