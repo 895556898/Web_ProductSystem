@@ -6,6 +6,8 @@ import com.ddl.entity.dto.ProductDTO;
 import com.ddl.service.ProductService;
 import io.javalin.http.Context;
 
+import java.util.Optional;
+
 public class ProductController {
     private final ProductService productService;
 
@@ -41,4 +43,22 @@ public class ProductController {
             ctx.json(new com.ddl.entity.vo.ProductResultVO(statusCode.getMsg(), "ok"));
         else ctx.json(new com.ddl.entity.vo.ProductResultVO(statusCode.getMsg(), "error"));
    }
+
+   // 更新商品信息
+    public void updateProduct(Context ctx) {
+        ProductDTO productDTO = ctx.bodyAsClass(ProductDTO.class);
+        StatusCode statusCode = productService.updateProduct(productDTO);
+        if (statusCode == StatusCode.PRODUCT_UPDATE_SUCCESS)
+            ctx.json(new com.ddl.entity.vo.ProductResultVO(statusCode.getMsg(), "ok"));
+        else ctx.json(new com.ddl.entity.vo.ProductResultVO(statusCode.getMsg(), "error"));
+    }
+
+    //查询商品信息
+    public void searchProduct(Context ctx) {
+        String attribute = ctx.queryParam("attribute");
+        String value = ctx.queryParam("value");
+
+        Optional<Product> products = productService.searchProducts(attribute, value);
+        ctx.json(products);
+    }
 }

@@ -19,7 +19,9 @@ public enum StatusCode {
     PRODUCT_ADD_SUCCESS(50000, "商品添加成功", "ok"),
     PRODUCT_ADD_FAILED(50001, "商品添加失败", "error"),
     PRODUCT_DELETE_SUCCESS(50002, "商品删除成功", "ok"),
-    PRODUCT_DELETE_FAILED(50003, "商品删除失败", "error");
+    PRODUCT_DELETE_FAILED(50003, "商品删除失败", "error"),
+    PRODUCT_UPDATE_SUCCESS(50004, "商品信息更新成功", "ok"),
+    PRODUCT_UPDATE_FAILED(50005, "商品信息更新失败", "error");
 
 
     final int code;
