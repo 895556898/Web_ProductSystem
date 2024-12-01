@@ -5,8 +5,8 @@ import io.javalin.http.Context;
 public class SessionInterceptor {
     private final static String SESSION_KEY = "SESSION_ID";
     public void handle(Context ctx){
-        //涉及登录直接放行
-        if(ctx.path().equals("/api/users/login")){
+        //涉及登录或注册直接放行
+        if(ctx.path().equals("/api/users/login") || ctx.path().equals("/api/users/register")){
             return;
         }
 

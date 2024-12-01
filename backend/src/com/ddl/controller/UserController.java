@@ -1,7 +1,6 @@
 package com.ddl.controller;
 
 import com.ddl.common.StatusCode;
-import com.ddl.entity.User;
 import com.ddl.entity.dto.UpdatePasswordDTO;
 import com.ddl.entity.dto.UserDTO;
 import com.ddl.entity.vo.LoginResultVO;
@@ -16,8 +15,20 @@ public class UserController {
     private final static String SESSION_KEY = "SESSION_ID";
 
     public static void userRegister(Context ctx) {
-        User user = ctx.bodyAsClass(User.class);
-        ctx.result(userService.register(user.getUsername(), user.getHashedPassword()).getMsg());
+        UserDTO userDTO = ctx.bodyAsClass(UserDTO.class);
+        StatusCode statusCode = userService.register(userDTO.getUsername(), userDTO.getPassword(), userDTO.getEmail());
+        if(statusCode == StatusCode.REGISTER_SUCCESS){
+            String sessionId = UUID.randomUUID().toString();
+            ctx.sessionAttribute(SESSION_KEY, sessionId);
+            ctx.sessionAttribute("username", userDTO.getUsername());
+            ctx.header("Authorization", "Bearer " + sessionId);
+            if(userDTO.isAutoLogin()){
+                ctx.cookie(SESSION_KEY, sessionId, 60 * 60 * 24 * 7);//硬编码1下，生命周期7天
+            }
+            ctx.json(new LoginResultVO(statusCode.getMsg(), "ok", sessionId));
+        }else{
+            ctx.json(new LoginResultVO(statusCode.getMsg(), "error", null));
+        }
     }
 
     public static void userLogin(Context ctx) {

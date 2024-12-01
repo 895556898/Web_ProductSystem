@@ -7,12 +7,14 @@ import com.ddl.entity.dto.UserDTO;
 import com.ddl.entity.vo.CurrentUserVO;
 import com.ddl.mapper.UserMapper;
 import com.mybatisflex.core.MybatisFlexBootstrap;
+import com.mybatisflex.core.query.QueryChain;
+import com.mybatisflex.core.query.QueryCondition;
 import com.mybatisflex.core.query.QueryWrapper;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
-import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class UserService {
     UserMapper userMapper = MybatisFlexBootstrap.getInstance().getMapper(UserMapper.class);
@@ -21,7 +23,7 @@ public class UserService {
         return new UserService();
     }
 
-    public StatusCode register(String username, String password) {
+    public StatusCode register(String username, String password, String email) {
         if(userMapper.selectCountByQuery(new QueryWrapper().eq("username", username)) != 0){
             return StatusCode.REGISTER_USERNAME_DUPLICATE;
         }
@@ -31,13 +33,15 @@ public class UserService {
 
         User user = new User();
         user.setUsername(username);
-        user.setHashedPassword(hashedPassword); //TODO：加盐
+        user.setHashedPassword(hashedPassword);
+        user.setEmail(email);
         user.setSalt(salt);
         userMapper.insert(user);
         return StatusCode.REGISTER_SUCCESS;
     }
 
     public StatusCode login(UserDTO userDTO) {
+        //TODO:暂时仅支持用户名密码登录，因为我不会用ORM的or查询
         User user = userMapper.selectOneByQuery(new QueryWrapper().eq("username", userDTO.getUsername()));
         if(user == null){
             return StatusCode.LOGIN_FAIL;
@@ -58,7 +62,11 @@ public class UserService {
     }
 
     private String generateSalt() {
-        return UUID.randomUUID().toString().replaceAll("-", "");
+        //线程安全的随机数生成器
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+        return Base64.getEncoder().encodeToString(salt);
     }
 
     private String hashSHA256(String input) {

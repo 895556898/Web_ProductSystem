@@ -30,6 +30,11 @@ declare namespace API {
     currentAuthority?: string;
   };
 
+  type RegisterResult = {
+    sessionID?: string,
+    status?: string;
+  }
+
   type PageParams = {
     current?: number;
     pageSize?: number;
@@ -62,8 +67,15 @@ declare namespace API {
     status?: string;
   };
 
-  type LoginParams = {
+  type RegisterParams = {
     username?: string;
+    password?: string; //实际上是sha256的hashed_password
+    email?: string;
+    autoLogin?: boolean;
+  }
+
+  type LoginParams = {
+    username?: string; //邮箱也可以
     password?: string;
     autoLogin?: boolean;
   };

@@ -36,6 +36,22 @@ export async function login(body: API.LoginParams, options?: { [key: string]: an
   })
 }
 
+export async function register(body: API.RegisterParams){
+  return request<API.RegisterResult>('/api/users/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+  }).then(res => {
+    const sessionID = res.sessionID;
+    if(sessionID){
+      localStorage.setItem('sessionID', sessionID)
+    }
+    return res;
+  })
+}
+
 /** 此处后端没有提供注释 GET /api/notices */
 export async function getNotices(options?: { [key: string]: any }) {
   return request<API.NoticeIconList>('/api/notices', {
