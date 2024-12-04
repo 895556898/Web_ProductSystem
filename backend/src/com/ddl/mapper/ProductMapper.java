@@ -25,6 +25,9 @@ public interface ProductMapper extends BaseMapper<Product> {
             "<when test='attribute == \"price\"'> " +
             "price = #{value} " +
             "</when> " +
+            "<when test='attribute == \"cost\"'> " +
+            "cost = #{value} " +
+            "</when> " +
             "<when test='attribute == \"origin\"'> " +
             "origin LIKE CONCAT('%', #{value}, '%') " +
             "</when> " +
@@ -42,7 +45,7 @@ public interface ProductMapper extends BaseMapper<Product> {
             "</when> " +
             "<when test='attribute == \"shelfLife\"'> " +
             "shelfLife = #{value} "+
-            "    <!-- 其他条件分支 -->" +
+//            "    <!-- 其他条件分支 -->" +
             "</when> " +
             "</choose> " +
             "</where>" +

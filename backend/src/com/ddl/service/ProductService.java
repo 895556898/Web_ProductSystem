@@ -49,6 +49,7 @@ public class ProductService {
         product.setId(productDTO.getId());
         product.setName(productDTO.getName());
         product.setPrice(productDTO.getPrice());
+        product.setCost(productDTO.getCost());
         product.setOrigin(productDTO.getOrigin());
         product.setCategory(productDTO.getCategory());
         product.setStock(productDTO.getStock());

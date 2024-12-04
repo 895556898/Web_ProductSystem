@@ -8,7 +8,8 @@ import java.time.LocalDate;
 public class ProductDTO {
     private Long id;
     private String name;
-    private double price;
+    private double price;               //价格
+    private String cost;                //成本
     private String origin;              //产地（省份）
     private String Category;            //商品类别：日用品，食物，玩具……
     private int stock;                  //库存数量
