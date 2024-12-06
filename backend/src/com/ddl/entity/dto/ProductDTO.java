@@ -2,16 +2,17 @@ package com.ddl.entity.dto;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
 public class ProductDTO {
     private Long id;
     private String name;
-    private double price;               //价格
-    private String cost;                //成本
+    private BigDecimal price;           //商品价格
+    private BigDecimal cost;            //成本
     private String origin;              //产地（省份）
-    private String Category;            //商品类别：日用品，食物，玩具……
+    private String category;            //商品类别：日用品，食物，玩具……
     private int stock;                  //库存数量
     private String brand;               //品牌
     private LocalDate productionDate;   //生产日期

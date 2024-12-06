@@ -10,6 +10,10 @@ import java.util.Optional;
 public interface ProductMapper extends BaseMapper<Product> {
     int updateById(long id);
 
+    int updateByName(String name);
+
+    int seleteByName(String name);
+
     //@param attribute 属性名称，如 "id", "name", "price" 等
     //@param value 属性值
     @Select("<script>" +
@@ -51,4 +55,6 @@ public interface ProductMapper extends BaseMapper<Product> {
             "</where>" +
             "</script>")
     Optional<Product> selectByAttribute(@Param("attribute") String attribute, @Param("value") String value);
+
+
 }

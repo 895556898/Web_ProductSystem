@@ -20,8 +20,16 @@ public enum StatusCode {
     PRODUCT_ADD_FAILED(50001, "商品添加失败", "error"),
     PRODUCT_DELETE_SUCCESS(50002, "商品删除成功", "ok"),
     PRODUCT_DELETE_FAILED(50003, "商品删除失败", "error"),
-    PRODUCT_UPDATE_SUCCESS(50004, "商品信息更新成功", "ok"),
-    PRODUCT_UPDATE_FAILED(50005, "商品信息更新失败", "error");
+    PRODUCT_NOT_FOUND(50004, "商品信息不存在", "error"),
+    PRODUCT_UPDATE_SUCCESS(50005, "商品信息更新成功", "ok"),
+    PRODUCT_UPDATE_FAILED(50006, "商品信息更新失败", "error"),
+//    PRODUCT_LOG_ADD_SUCCESS(60000, "商品日志信息添加成功", "ok"),
+//    PRODUCT_LOG_ADD_FAIL(60001, "商品日志信息添加失败", "error"),
+//    PRODUCT_LOG_DELETE_SUCCESS(60002, "商品日志信息删除成功","ok"),
+//    PRODUCT_LOG_NOT_FOUND(60003, "商品日志信息不存在", "error"),
+//    PRODUCT_LOG_DELETE_FAILED(60004, "商品日志信息删除失败", "error"),
+//    PRODUCT_LOG_FOUND_SUCCESS(60005, "商品日志信息查询成功", "ok"),
+    ;
 
 
     final int code;
