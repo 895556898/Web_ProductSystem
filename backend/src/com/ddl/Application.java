@@ -4,6 +4,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.ddl.controller.ProductController;
 import com.ddl.controller.UserController;
 import com.ddl.interceptor.SessionInterceptor;
+import com.ddl.mapper.ProductMapper;
 import com.ddl.mapper.UserMapper;
 import com.mybatisflex.core.MybatisFlexBootstrap;
 import io.javalin.Javalin;
@@ -19,7 +20,7 @@ import io.javalin.Javalin;
         app.post("/api/users/register", UserController::userRegister);
         app.post("/api/users/login", UserController::userLogin);
         app.post("/api/users/logout", UserController::userLogout);
-
+        app.post("/api/products/list", ProductController::listProduct);
         app.post("/api/products/add", ProductController::productAdd);
         app.post("/api/products/delete", ProductController::productDelete);
         app.post("/api/products/update",ProductController::productUpdate);
@@ -35,6 +36,7 @@ import io.javalin.Javalin;
             MybatisFlexBootstrap.getInstance()
                     .setDataSource(dataSource)
                     .addMapper(UserMapper.class)
+                    .addMapper(ProductMapper.class)
                     .start();
         } catch (Exception e) {
             e.printStackTrace();

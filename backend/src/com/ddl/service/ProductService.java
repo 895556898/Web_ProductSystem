@@ -3,15 +3,18 @@ package com.ddl.service;
 import com.ddl.common.StatusCode;
 import com.ddl.entity.Product;
 import com.ddl.entity.ProductLog;
+import com.ddl.entity.dto.PageParamDTO;
 import com.ddl.entity.dto.ProductDTO;
 import com.ddl.mapper.ProductLogMapper;
 import com.ddl.mapper.ProductMapper;
 import com.mybatisflex.core.MybatisFlexBootstrap;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.core.row.Db;
+import com.mybatisflex.core.paginate.Page;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -244,5 +247,18 @@ public class ProductService {
     //查询商品信息
     public Optional<Product> searchProducts(String attribute, String value) {
         return productMapper.selectByAttribute(attribute, value);
+    }
+
+    public Page<Product> listProducts(PageParamDTO pageParam){
+        QueryWrapper queryWrapper = new QueryWrapper();
+        Optional.ofNullable(pageParam)
+                .ifPresent(param -> {
+                    Optional.ofNullable(param.getName())
+                            .ifPresent(name -> queryWrapper.like("name", name));
+                    Optional.ofNullable(param.getOrigin())
+                            .ifPresent(origin -> queryWrapper.like("origin", origin));
+                });
+
+        return productMapper.paginate(pageParam.getCurrent(), pageParam.getPageSize(), queryWrapper);
     }
 }

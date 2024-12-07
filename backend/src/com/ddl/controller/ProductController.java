@@ -2,6 +2,7 @@ package com.ddl.controller;
 
 import com.ddl.common.StatusCode;
 import com.ddl.entity.Product;
+import com.ddl.entity.dto.PageParamDTO;
 import com.ddl.entity.dto.ProductDTO;
 import com.ddl.entity.vo.ProductResultVO;
 import com.ddl.service.ProductService;
@@ -53,5 +54,10 @@ public class ProductController {
 
         Optional<Product> products = productService.searchProducts(attribute, value);
         ctx.json(products);
+    }
+
+    public static void listProduct(Context ctx){
+        PageParamDTO pageParamDTO = ctx.bodyAsClass(PageParamDTO.class);
+        ctx.json(productService.listProducts(pageParamDTO));
     }
 }

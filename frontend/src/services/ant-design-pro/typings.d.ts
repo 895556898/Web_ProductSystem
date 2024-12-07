@@ -110,4 +110,30 @@ declare namespace API {
     description?: string;
     type?: NoticeIconItemType;
   };
+  type ProductPageParam = PageParams & {
+    name?: string;
+    origin?: string;
+  }
+
+  type ProductList = {
+    records?: ProductListItem[];
+    pageNumber?: number;
+    pageSize?: number;
+    totalPage?: number;
+    totalRow?: number;
+  }
+
+  type ProductListItem = {
+    id?: number;
+    name?: string;
+    price?: number;
+    cost?: number;
+    origin?: string;
+    category?: string;
+    stock?: number;
+    brand?: string;
+    productionDate?: string;
+    shelfLife?: string;
+    createdAt?: string;
+  };
 }

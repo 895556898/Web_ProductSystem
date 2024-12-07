@@ -112,3 +112,12 @@ export async function removeRule(options?: { [key: string]: any }) {
     }
   });
 }
+
+export const getProductList = (params: API.PageParams) => {
+  return request<API.ProductList>('/api/products/list', {
+    method: 'POST',
+    data:{
+      ...params,
+    }
+  });
+}

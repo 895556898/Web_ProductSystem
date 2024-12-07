@@ -7,8 +7,6 @@ import com.ddl.entity.dto.UserDTO;
 import com.ddl.entity.vo.CurrentUserVO;
 import com.ddl.mapper.UserMapper;
 import com.mybatisflex.core.MybatisFlexBootstrap;
-import com.mybatisflex.core.query.QueryChain;
-import com.mybatisflex.core.query.QueryCondition;
 import com.mybatisflex.core.query.QueryWrapper;
 
 import java.security.MessageDigest;
