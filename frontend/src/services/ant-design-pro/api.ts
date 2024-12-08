@@ -113,7 +113,7 @@ export async function removeRule(options?: { [key: string]: any }) {
   });
 }
 
-export const getProductList = (params: API.PageParams) => {
+export const getProductList = (params: API.ProductPageParam) => {
   return request<API.ProductList>('/api/products/list', {
     method: 'POST',
     data:{
@@ -121,3 +121,29 @@ export const getProductList = (params: API.PageParams) => {
     }
   });
 }
+
+export const addProduct = (params: API.ProductListItem) => {
+  return request<API.APIStatusObject>('/api/products/add', {
+    method: 'POST',
+    data:{
+      ...params,
+    }
+  });
+}
+
+export const deleteProduct = (param: number) => {
+  return request<API.APIStatusObject>(`/api/products/delete/${param}`, {
+    method: 'DELETE',
+  });
+}
+
+export const updateProduct = (params: API.ProductListItem) => {
+  return request<API.APIStatusObject>('/api/products/update', {
+    method: 'POST',
+    data: {
+      ...params
+    }
+  });
+};
+
+

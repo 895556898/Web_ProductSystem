@@ -22,29 +22,29 @@ export default [
       },
     ],
   },
-  {
-    path: '/welcome',
-    name: 'welcome',
-    component: './Welcome',
-    icon: 'smile',
-  },
-  {
-    path: '/admin',
-    name: 'admin',
-    icon: 'crown',
-    // access: 'canAdmin',
-    routes: [
-      {
-        path: '/admin',
-        redirect: '/admin/sub-page',
-      },
-      {
-        path: '/admin/sub-page',
-        name: 'sub-page',
-        component: './Admin',
-      },
-    ],
-  },
+  // {
+  //   path: '/welcome',
+  //   name: 'welcome',
+  //   component: './Welcome',
+  //   icon: 'smile',
+  // },
+  // {
+  //   path: '/admin',
+  //   name: 'admin',
+  //   icon: 'crown',
+  //   access: 'canAdmin',
+  //   routes: [
+  //     {
+  //       path: '/admin',
+  //       redirect: '/admin/sub-page',
+  //     },
+  //     {
+  //       path: '/admin/sub-page',
+  //       name: 'sub-page',
+  //       component: './Admin',
+  //     },
+  //   ],
+  // },
   {
     path: '/productList',
     name: 'productList',
@@ -59,7 +59,7 @@ export default [
   // },
   {
     path: '/',
-    redirect: '/welcome',
+    redirect: '/productList',
   },
   {
     path: '*',

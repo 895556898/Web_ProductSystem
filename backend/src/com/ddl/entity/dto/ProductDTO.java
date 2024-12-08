@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class ProductDTO {
-    private Long id;
+    private int id;
     private String name;
     private BigDecimal price;               //价格
     private BigDecimal cost;                //成本

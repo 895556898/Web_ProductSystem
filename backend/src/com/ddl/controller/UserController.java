@@ -25,6 +25,7 @@ public class UserController {
             ctx.header("Authorization", "Bearer " + sessionId);
             if(userDTO.isAutoLogin()){
                 ctx.cookie(SESSION_KEY, sessionId, 60 * 60 * 24 * 7);//硬编码1下，生命周期7天
+                ctx.cookie("username", userDTO.getUsername(), 60 * 60 * 24 * 7);
             }
             ctx.json(new LoginResultVO(statusCode.getMsg(), "ok", sessionId));
         }else{
@@ -42,6 +43,7 @@ public class UserController {
             ctx.header("Authorization", "Bearer " + sessionId);
             if(userDTO.isAutoLogin()){
                 ctx.cookie(SESSION_KEY, sessionId, 60 * 60 * 24 * 7);//硬编码1下，生命周期7天
+                ctx.cookie("username", userDTO.getUsername(), 60 * 60 * 24 * 7);
             }
             ctx.json(new LoginResultVO(statusCode.getMsg(), "ok", sessionId));
         }else{

@@ -2,19 +2,19 @@ import {
   ActionType, ModalForm,
   ProColumns,
   ProForm,
-  ProFormDateTimePicker,
+  ProFormDatePicker,
   ProFormText,
   ProTable
 } from '@ant-design/pro-components';
 import React, { useRef, useState } from 'react';
-import { getProductList } from '@/services/ant-design-pro/api';
-import { PlusOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
-import { ProFormDatePicker } from '@ant-design/pro-components';
-import { ProFormDateRangePicker } from '@ant-design/pro-components';
+import { addProduct, deleteProduct, getProductList, updateProduct } from '@/services/ant-design-pro/api';
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, message, Modal } from 'antd';
 const ProductList: React.FC = () => {
   const actionRef = useRef<ActionType>();
+  const [mode, setMode] = useState<'create' | 'edit'>('create');
   const [modalVisit, setModalVisit] = useState<boolean>(false);
+  const [recordValue, setRecordValue] = useState<API.ProductListItem | undefined>(undefined);
   //如果想复用的话可以把columns提取到别的地方
   const columns : ProColumns<API.ProductListItem>[] = [
     {
@@ -66,17 +66,82 @@ const ProductList: React.FC = () => {
       sorter: true,
       hideInSearch: true,
     },
+    {
+      title: '操作',
+      valueType: 'option',
+      key: 'option',
+      render: (text, record, _, action) => [
+        <>
+        <Button icon={<DeleteOutlined />}
+                type="primary"
+                danger={true}
+                onClick={async () => {
+                  Modal.confirm({
+                    title: '确认删除',
+                    content: '确定要删除此产品吗？',
+                    okText: '删除',
+                    okType: 'danger',
+                    cancelText: '取消',
+                    onOk: async () => {
+                      if (typeof record.id === 'number') {
+                        const res = await deleteProduct(record.id);
+                        if(res.status === "ok"){
+                          message.success('删除成功');
+                          actionRef.current?.reload();
+                          return true;
+                        }else{
+                          message.error('删除失败');
+                          return false;
+                        }
+                      }
+                    },
+                  });
+                }}>
+          删除
+        </Button>
+        <Button icon={<EditOutlined />}
+                type="primary"
+                onClick={async () => {
+                  setRecordValue(record);
+                  setMode('edit');
+                  setModalVisit(true);
+                }}>
+          编辑
+        </Button>
+        </>
+      ]
+    }
   ];
   return (
     <>
       <ModalForm
-        title="新建商品"
+        title={mode === 'create' ? '新建产品' : '编辑产品'}
         open={modalVisit}
+        modalProps={{ destroyOnClose: true }}
+        initialValues={recordValue}
         onFinish={
           async (values) => {
+            let msg;
+            if (mode === 'create') {
+              msg = await addProduct(values);
+            } else {
+              msg = await updateProduct({
+                id: recordValue?.id,
+                ...values
+              });
+            }
 
+            if (msg.status === 'ok') {
+              message.success(mode === 'create' ? '添加成功' : '修改成功');
+              actionRef.current?.reload();
+              setModalVisit(false);
+              return true;
+            } else {
+              message.error(mode === 'create' ? '添加失败:' : '修改失败:' + msg.msg);
+              return false;
+            }
           }
-      }
+        }
         onOpenChange={setModalVisit}
       >
         <ProForm.Group>
@@ -129,20 +194,26 @@ const ProductList: React.FC = () => {
             placeholder="请输入品牌"
             required={true}
           />
-
-          <ProFormDatePicker name="productionDate" label="生产日期" />
+          <ProFormDatePicker
+            name="productionDate"
+            label={'生产日期'}
+            required={true}
+            dataFormat={'YYYY-MM-DD'}
+          />
         </ProForm.Group>
       </ModalForm>
 
     <ProTable<API.ProductListItem, API.PageParams>
     columns={columns}
     rowKey="id"
+    actionRef={actionRef}
     toolBarRender={() => [
       <Button
         key="button"
         icon={<PlusOutlined />}
         onClick={() => {
-          setModalVisit(true)
+          setRecordValue(undefined);
+          setModalVisit(true);
         }}
         type="primary"
       >
@@ -154,16 +225,13 @@ const ProductList: React.FC = () => {
       request={async (
       // 第一个参数 params 查询表单和 params 参数的结合
       // 第一个参数中一定会有 pageSize 和  current ，这两个参数是 antd 的规范
-      params: API.PageParams,
+      params: API.ProductPageParam,
       sort,
       filter,
     ) => {
       // 这里需要返回一个 Promise,在返回之前你可以进行数据转化
       // 如果需要转化参数可以在这里进行修改
-      const msg = await getProductList({
-        current: params.current,
-        pageSize: params.pageSize,
-      });
+      const msg = await getProductList(params);
       return {
         data: msg.records,
         // success 请返回 true，

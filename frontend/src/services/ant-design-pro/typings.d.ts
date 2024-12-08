@@ -136,4 +136,10 @@ declare namespace API {
     shelfLife?: string;
     createdAt?: string;
   };
+
+  type APIStatusObject = {
+    code: number;
+    msg: string;
+    status: string;
+  }
 }

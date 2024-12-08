@@ -10,9 +10,9 @@ import java.time.LocalDate;
 @Table("product_log")
 public class ProductLog {
     @Id
-    private long id;                                //日志ID
+    private int id;                                //日志ID
 
-    private long itemId;                            //商品ID
+    private int itemId;                            //商品ID
     private String itemName;                        //商品名称
     private String action;                          //修改操作
     private LocalDate createdAt;                    //创建时间

@@ -2,6 +2,7 @@ package com.ddl.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import lombok.Data;
 
@@ -12,8 +13,8 @@ import java.time.LocalDateTime;
 @Data
 @Table("product")
 public class Product {
-    @Id
-    private Long id;                   //商品ID（条形码）
+    @Id(keyType = KeyType.Auto)
+    private int id;                   //商品ID（条形码）
     private String name;
     private BigDecimal price;           //商品价格
     private BigDecimal cost;            //成本
