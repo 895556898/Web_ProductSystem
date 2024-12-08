@@ -2,6 +2,7 @@
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.ddl.controller.ProductController;
+import com.ddl.controller.ProductLogController;
 import com.ddl.controller.UserController;
 import com.ddl.interceptor.SessionInterceptor;
 import com.ddl.mapper.ProductLogMapper;
@@ -25,6 +26,7 @@ import io.javalin.Javalin;
         app.post("/api/products/add", ProductController::productAdd);
         app.delete("/api/products/delete/{id}", ProductController::productDelete);
         app.post("/api/products/update",ProductController::productUpdate);
+        app.post("/api/productLog/list", ProductLogController::listLog);
 
         // 拦截器
         SessionInterceptor sessionInterceptor = new SessionInterceptor();

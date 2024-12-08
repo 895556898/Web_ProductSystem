@@ -50,4 +50,5 @@ export default {
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
   'menu.productList': '商品列表',
+  'menu.productLogList': '商品日志列表',
 };

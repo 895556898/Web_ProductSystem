@@ -1,10 +1,10 @@
 package com.ddl.service;
 
-import com.ddl.common.StatusCode;
-import com.ddl.entity.ProductLog;
-import com.ddl.entity.dto.ProductLogDTO;
+import com.ddl.entity.dto.PageParamDTO;
+import com.ddl.entity.vo.ProductLogVO;
 import com.ddl.mapper.ProductLogMapper;
 import com.mybatisflex.core.MybatisFlexBootstrap;
+import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 
 public class ProductLogService {
@@ -14,16 +14,7 @@ public class ProductLogService {
         return new ProductLogService();
     }
 
-
-//    //查找
-//    public StatusCode find(ProductLogDTO productLogDTO){
-//        QueryWrapper queryWrapper = new QueryWrapper();
-//        queryWrapper.eq("id",productLogDTO.getId());
-//        ProductLog productLog = productLogMapper.selectOneByQuery(queryWrapper);
-//        if(productLog == null){
-//            return StatusCode.PRODUCT_LOG_NOT_FOUND;
-//        } else {
-//            return StatusCode.PRODUCT_LOG_FOUND_SUCCESS;
-//        }
-//    }
+    public Page<ProductLogVO> listLog(PageParamDTO pageParam){
+        return productLogMapper.paginateWithRelationsAs(pageParam.getCurrent(), pageParam.getPageSize(), new QueryWrapper(), ProductLogVO.class);
+    }
 }

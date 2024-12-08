@@ -1,14 +1,11 @@
 package com.ddl.controller;
 
 import com.ddl.common.StatusCode;
-import com.ddl.entity.Product;
 import com.ddl.entity.dto.PageParamDTO;
 import com.ddl.entity.dto.ProductDTO;
 import com.ddl.entity.vo.ProductResultVO;
 import com.ddl.service.ProductService;
 import io.javalin.http.Context;
-
-import java.util.Optional;
 
 public class ProductController extends BaseController{
 
@@ -47,14 +44,14 @@ public class ProductController extends BaseController{
             ctx.json(new ProductResultVO(statusCode.getMsg(), "error"));
     }
 
-    //查询商品信息
-    public void searchProduct(Context ctx) {
-        String attribute = ctx.queryParam("attribute");
-        String value = ctx.queryParam("value");
-
-        Optional<Product> products = productService.searchProducts(attribute, value);
-        ctx.json(products);
-    }
+//    //查询商品信息
+//    public void searchProduct(Context ctx) {
+//        String attribute = ctx.queryParam("attribute");
+//        String value = ctx.queryParam("value");
+//
+//        Optional<Product> products = productService.searchProducts(attribute, value);
+//        ctx.json(products);
+//    }
 
     public static void listProduct(Context ctx){
         PageParamDTO pageParamDTO = ctx.bodyAsClass(PageParamDTO.class);

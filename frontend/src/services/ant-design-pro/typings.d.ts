@@ -142,4 +142,21 @@ declare namespace API {
     msg: string;
     status: string;
   }
+
+  type ProductLogList = {
+    records?: ProductLogItem[];
+    pageNumber?: number;
+    pageSize?: number;
+    totalPage?: number;
+    totalRow?: number;
+  }
+
+  type ProductLogItem = {
+    id?: number;
+    itemId?: number;
+    name?: string;
+    action?: string;
+    createdAt?: Date;
+    createdBy?: string;
+  }
 }

@@ -49,7 +49,13 @@ export default [
     path: '/productList',
     name: 'productList',
     component: './ProductList',
-    icon: 'smile',
+    icon: 'rise',
+  },
+  {
+    path: '/productLogList',
+    name: 'productLogList',
+    component: './ProductLogList',
+    icon: 'database',
   },
   // {
   //   name: 'list.table-list',

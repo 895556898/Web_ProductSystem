@@ -52,7 +52,6 @@ public class ProductService {
 
             ProductLog productLog = new ProductLog();
             productLog.setItemId(product.getId());
-            productLog.setItemName(product.getName());
             productLog.setAction("添加商品");
             productLog.setCreatedBy(username);
             affectedRows2.set(productLogMapper.insertSelective(productLog));
@@ -79,7 +78,6 @@ public class ProductService {
 
         ProductLog productLog = new ProductLog();
         productLog.setItemId(id);
-        productLog.setItemName(name);
         productLog.setAction("删除商品");
         productLog.setCreatedBy(username);
 
@@ -126,7 +124,6 @@ public class ProductService {
 
         ProductLog productLog = new ProductLog();
         productLog.setItemId(id);
-        productLog.setItemName(name);
         productLog.setAction("更新商品信息");
         productLog.setCreatedBy(username);
 
@@ -143,10 +140,10 @@ public class ProductService {
         }
     }
 
-    //查询商品信息
-    public Optional<Product> searchProducts(String attribute, String value) {
-        return productMapper.selectByAttribute(attribute, value);
-    }
+//    //查询商品信息
+//    public Optional<Product> searchProducts(String attribute, String value) {
+//        return productMapper.selectByAttribute(attribute, value);
+//    }
 
     public Page<Product> listProducts(PageParamDTO pageParam){
         QueryWrapper queryWrapper = new QueryWrapper();

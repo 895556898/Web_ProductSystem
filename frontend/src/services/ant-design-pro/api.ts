@@ -146,4 +146,11 @@ export const updateProduct = (params: API.ProductListItem) => {
   });
 };
 
-
+export const getProductLogList = (params: API.PageParams)=> {
+  return request<API.ProductLogList>('/api/productLog/list', {
+    method: 'POST',
+    data: {
+      ...params
+    }
+  });
+}
