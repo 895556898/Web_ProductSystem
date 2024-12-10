@@ -6,8 +6,6 @@ import lombok.Getter;
 public enum StatusCode {
     REGISTER_SUCCESS(10000, "注册成功", "ok"),
     REGISTER_USERNAME_DUPLICATE(10001, "注册失败，用户已存在", "error"),
-    REGISTER_ERROR(10002, "注册失败，未知错误", "error"),
-    REGISTER_USERNAME_OR_PASSWORD_EMPTY(10003, "用户名或密码不能为空", "error"),
     LOGIN_SUCCESS(20000, "登录成功", "ok"),
     LOGIN_FAIL(20001, "登录失败，用户名或密码错误", "error"),
     USER_NOT_FOUND(30000, "未知用户名", "error"),
@@ -23,12 +21,6 @@ public enum StatusCode {
     PRODUCT_NOT_FOUND(50004, "商品信息不存在", "error"),
     PRODUCT_UPDATE_SUCCESS(50005, "商品信息更新成功", "ok"),
     PRODUCT_UPDATE_FAILED(50006, "商品信息更新失败", "error"),
-//    PRODUCT_LOG_ADD_SUCCESS(60000, "商品日志信息添加成功", "ok"),
-//    PRODUCT_LOG_ADD_FAIL(60001, "商品日志信息添加失败", "error"),
-//    PRODUCT_LOG_DELETE_SUCCESS(60002, "商品日志信息删除成功","ok"),
-//    PRODUCT_LOG_NOT_FOUND(60003, "商品日志信息不存在", "error"),
-//    PRODUCT_LOG_DELETE_FAILED(60004, "商品日志信息删除失败", "error"),
-//    PRODUCT_LOG_FOUND_SUCCESS(60005, "商品日志信息查询成功", "ok"),
     ;
 
 

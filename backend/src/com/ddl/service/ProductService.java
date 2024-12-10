@@ -26,7 +26,7 @@ public class ProductService {
         return new ProductService();
     }
 
-    //添加商品new
+    //添加商品
     public StatusCode addProduct(ProductDTO productDTO, String username) {
         Product product = new Product();
 
@@ -65,14 +65,13 @@ public class ProductService {
         }
     }
 
-    //删除商品new
+    //删除商品
     public StatusCode delete(int id , String username) {
         Product product = productMapper.selectOneById(id);
         if(product == null){
             return StatusCode.PRODUCT_NOT_FOUND;
         }
 
-        String name = product.getName();
         AtomicInteger affectedRows1 = new AtomicInteger();           //商品表中受影响的行数
         AtomicInteger affectedRows2 = new AtomicInteger();
 
@@ -140,11 +139,7 @@ public class ProductService {
         }
     }
 
-//    //查询商品信息
-//    public Optional<Product> searchProducts(String attribute, String value) {
-//        return productMapper.selectByAttribute(attribute, value);
-//    }
-
+    //查询商品列表
     public Page<Product> listProducts(PageParamDTO pageParam){
         QueryWrapper queryWrapper = new QueryWrapper();
         Optional.ofNullable(pageParam)

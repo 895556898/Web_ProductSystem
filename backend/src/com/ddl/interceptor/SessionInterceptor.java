@@ -27,7 +27,6 @@ public class SessionInterceptor {
 
         if (storedSessionId == null || !storedSessionId.equals(sessionId)) {
             ctx.status(401).result("Unauthorized: Invalid session");
-//            ctx.redirect("/api/users/login");
         }
     }
 }

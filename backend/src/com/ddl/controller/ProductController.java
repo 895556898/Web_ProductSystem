@@ -11,7 +11,7 @@ public class ProductController extends BaseController{
 
     private final static ProductService productService = ProductService.getInstance();
 
-    //添加商品new
+    //添加商品
     public static void productAdd(Context ctx){
         ProductDTO productDTO = ctx.bodyAsClass(ProductDTO.class);
         String username = getUsername(ctx);
@@ -22,7 +22,7 @@ public class ProductController extends BaseController{
             ctx.json(new ProductResultVO(statusCode.getMsg(), "error"));
     }
 
-    // 删除商品new
+    // 删除商品
     public static void productDelete(Context ctx) {
         int id = Integer.parseInt(ctx.pathParam("id"));
         String username = getUsername(ctx);
@@ -44,15 +44,7 @@ public class ProductController extends BaseController{
             ctx.json(new ProductResultVO(statusCode.getMsg(), "error"));
     }
 
-//    //查询商品信息
-//    public void searchProduct(Context ctx) {
-//        String attribute = ctx.queryParam("attribute");
-//        String value = ctx.queryParam("value");
-//
-//        Optional<Product> products = productService.searchProducts(attribute, value);
-//        ctx.json(products);
-//    }
-
+    //查询商品列表
     public static void listProduct(Context ctx){
         PageParamDTO pageParamDTO = ctx.bodyAsClass(PageParamDTO.class);
         ctx.json(productService.listProducts(pageParamDTO));
