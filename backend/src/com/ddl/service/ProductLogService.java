@@ -15,6 +15,8 @@ public class ProductLogService {
     }
 
     public Page<ProductLogVO> listLog(PageParamDTO pageParam){
-        return productLogMapper.paginateWithRelationsAs(pageParam.getCurrent(), pageParam.getPageSize(), new QueryWrapper(), ProductLogVO.class);
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.orderBy("created_at", false);//默认降序
+        return productLogMapper.paginateWithRelationsAs(pageParam.getCurrent(), pageParam.getPageSize(), queryWrapper, ProductLogVO.class);
     }
 }
