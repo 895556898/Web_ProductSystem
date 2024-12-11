@@ -16,7 +16,7 @@ import io.javalin.Javalin;
     public static void main(String[] args) {
         Javalin app = Javalin.create(config -> {
             config.http.defaultContentType = "application/json";
-        }).start("0.0.0.0",8080);
+        }).start(8080);
 
         app.get("/api/users/currentUser", UserController::getCurrentUser);
         app.post("/api/users/register", UserController::userRegister);
