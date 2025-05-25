@@ -1,9 +1,10 @@
- package com.ddl;
+package com.ddl;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.ddl.controller.ProductController;
 import com.ddl.controller.ProductLogController;
 import com.ddl.controller.UserController;
+import com.ddl.controller.UserProductController;
 import com.ddl.interceptor.SessionInterceptor;
 import com.ddl.mapper.ProductLogMapper;
 import com.ddl.mapper.ProductMapper;
@@ -27,6 +28,9 @@ import io.javalin.Javalin;
         app.delete("/api/products/delete/{id}", ProductController::productDelete);
         app.post("/api/products/update",ProductController::productUpdate);
         app.post("/api/productLog/list", ProductLogController::listLog);
+        
+        // 用户端接口
+        app.post("/api/user/products/list", UserProductController::listProducts);
 
         // 拦截器
         SessionInterceptor sessionInterceptor = new SessionInterceptor();

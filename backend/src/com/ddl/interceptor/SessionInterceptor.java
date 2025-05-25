@@ -6,7 +6,9 @@ public class SessionInterceptor {
     private final static String SESSION_KEY = "SESSION_ID";
     public void handle(Context ctx){
         //涉及登录或注册直接放行
-        if(ctx.path().equals("/api/users/login") || ctx.path().equals("/api/users/register")){
+        if(ctx.path().equals("/api/users/login") || 
+           ctx.path().equals("/api/users/register") ||
+           ctx.path().equals("/api/user/products/list")){
             return;
         }
 

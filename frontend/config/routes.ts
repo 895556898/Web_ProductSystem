@@ -57,6 +57,13 @@ export default [
     component: './ProductLogList',
     icon: 'database',
   },
+  {
+    path: '/user/products',
+    name: 'userProducts',
+    component: './UserProductList',
+    icon: 'shopping',
+    layout: false,
+  },
   // {
   //   name: 'list.table-list',
   //   icon: 'table',
