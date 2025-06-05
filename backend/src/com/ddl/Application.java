@@ -39,7 +39,7 @@ import io.javalin.Javalin;
         try (DruidDataSource dataSource = new DruidDataSource()) {
             dataSource.setUrl("jdbc:mysql://112.124.20.183:3306/Web_ProductSystem");
             dataSource.setUsername("root");
-            dataSource.setPassword("vKQ8G3eC");
+            dataSource.setPassword("JdvExHGHTe");
             MybatisFlexBootstrap.getInstance()
                     .setDataSource(dataSource)
                     .addMapper(UserMapper.class)
