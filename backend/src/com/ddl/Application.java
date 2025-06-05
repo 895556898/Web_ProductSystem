@@ -4,7 +4,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.ddl.controller.ProductController;
 import com.ddl.controller.ProductLogController;
 import com.ddl.controller.UserController;
-import com.ddl.controller.UserProductController;
+import com.ddl.controller.OrderController;
 import com.ddl.interceptor.SessionInterceptor;
 import com.ddl.mapper.ProductLogMapper;
 import com.ddl.mapper.ProductMapper;
@@ -30,7 +30,7 @@ import io.javalin.Javalin;
         app.post("/api/productLog/list", ProductLogController::listLog);
         
         // 用户端接口
-        app.post("/api/user/products/list", UserProductController::listProducts);
+        app.post("/api/user/products", OrderController::checkout);
 
         // 拦截器
         SessionInterceptor sessionInterceptor = new SessionInterceptor();
