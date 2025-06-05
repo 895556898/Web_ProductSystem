@@ -7,7 +7,7 @@ const Settings: ProLayoutProps & {
   pwa?: boolean;
   logo?: string;
 } = {
-  "title": "商品管理系统",
+  "title": "面包店管理系统",
   "navTheme": "light",
   "colorPrimary": "#1890ff",
   "layout": "mix",
