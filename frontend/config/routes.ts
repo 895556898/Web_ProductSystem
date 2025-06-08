@@ -57,6 +57,12 @@ export default [
     component: './ProductLogList',
     icon: 'database',
   },
+  {
+    path: '/checkout',
+    name: 'checkout',
+    component: './Checkout',
+    icon: 'pay-circle',
+  },
   // {
   //   name: 'list.table-list',
   //   icon: 'table',
